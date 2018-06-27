@@ -16,6 +16,10 @@ FILE(GLOB_RECURSE titane_header_files ${titane_header_dir}/*)
 INCLUDE_DIRECTORIES(${titane_header_dir})
 ADD_EXECUTABLE(${titane_project_name} ${titane_src_files} ${titane_header_files})
 
+#------------ compiler specifications ------------
+TARGET_COMPILE_FEATURES(${titane_project_name} PUBLIC cxx_noexcept)
+TARGET_COMPILE_FEATURES(${titane_project_name} PUBLIC cxx_override)
+
 #------ find OpenCL ------
 FIND_PACKAGE("OpenCL")
 
