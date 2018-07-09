@@ -1,7 +1,5 @@
 #include "exceptions/not.hpp"
 
-namespace titane
-{
 namespace exception
 {
 
@@ -10,5 +8,4 @@ Not::Not(const std::string& _message) noexcept
 {
 }
 
-}
 }

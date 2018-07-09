@@ -4,8 +4,6 @@
 
 #include <string>
 
-namespace titane
-{
 namespace exception
 {
 
@@ -18,5 +16,4 @@ public:
 
 };
 
-}
 }

@@ -1,11 +1,9 @@
-#include "core/Device.hpp"
+#include "core/device.hpp"
 
 #include "exceptions/invalid.hpp"
 #include "exceptions/not.hpp"
 #include "exceptions/unknow.hpp"
 
-namespace titane
-{
 namespace core
 {
 
@@ -31,7 +29,7 @@ Device::Device(const Platform& _platform,  const TITANE_DEVICE_TYPE& _type)
 
     if(devices.empty())
     {
-        throw ::titane::exception::Not("No device found");
+        throw ::exception::Not("No device found");
     }
 
     switch(err)
@@ -39,19 +37,19 @@ Device::Device(const Platform& _platform,  const TITANE_DEVICE_TYPE& _type)
     case CL_SUCCESS :
         break;
     case CL_INVALID_PLATFORM :
-        throw ::titane::exception::Invalid("Invalid platform");
+        throw ::exception::Invalid("Invalid platform");
         break;
     case CL_INVALID_DEVICE_TYPE :
-        throw ::titane::exception::Invalid("Invalid device type");
+        throw ::exception::Invalid("Invalid device type");
         break;
     case CL_INVALID_VALUE :
-        throw ::titane::exception::Invalid("Invalid value");
+        throw ::exception::Invalid("Invalid value");
         break;
     case CL_DEVICE_NOT_FOUND :
-        throw ::titane::exception::Invalid("Device not found");
+        throw ::exception::Invalid("Device not found");
         break;
     default :
-        throw ::titane::exception::Unknow("Unknow exception");
+        throw ::exception::Unknow("Unknow exception");
         break;
     }
 
@@ -62,8 +60,7 @@ Device::Device(const Platform& _platform,  const TITANE_DEVICE_TYPE& _type)
             m_device = device;
         }
     }
-    throw ::titane::exception::Not("Not available device found");
+    throw ::exception::Not("Not available device found");
 }
 
-}
 }

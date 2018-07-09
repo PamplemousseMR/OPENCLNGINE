@@ -1,7 +1,5 @@
 #include "exceptions/iexception.hpp"
 
-namespace titane
-{
 namespace exception
 {
 
@@ -16,5 +14,4 @@ const char* IException::what() const noexcept
     return m_message.c_str();
 }
 
-}
 }

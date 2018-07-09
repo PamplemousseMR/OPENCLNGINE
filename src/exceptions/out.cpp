@@ -1,7 +1,5 @@
 #include "exceptions/out.hpp"
 
-namespace titane
-{
 namespace exception
 {
 
@@ -10,5 +8,4 @@ Out::Out(const std::string& _message) noexcept
 {
 }
 
-}
 }

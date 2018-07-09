@@ -3,8 +3,6 @@
 #include <exception>
 #include <string>
 
-namespace titane
-{
 namespace exception
 {
 
@@ -23,5 +21,4 @@ private:
 
 };
 
-}
 }

@@ -2,8 +2,6 @@
 
 #include <CL/cl.hpp>
 
-namespace titane
-{
 namespace core
 {
 
@@ -36,5 +34,4 @@ private:
 
 };
 
-}
 }

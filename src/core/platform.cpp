@@ -6,8 +6,6 @@
 
 #include <algorithm>
 
-namespace titane
-{
 namespace core
 {
 
@@ -18,7 +16,7 @@ Platform::Platform(const TITANE_PLATFORM_VENDOR& _vendor)
 
     if(platforms.empty())
     {
-        throw ::titane::exception::Not("No platform found");
+        throw ::exception::Not("No platform found");
     }
 
     switch(err)
@@ -26,10 +24,10 @@ Platform::Platform(const TITANE_PLATFORM_VENDOR& _vendor)
     case CL_SUCCESS :
         break;
     case CL_INVALID_VALUE :
-        throw ::titane::exception::Invalid("Invalid value");
+        throw ::exception::Invalid("Invalid value");
         break;
     default :
-        throw ::titane::exception::Unknow("Unknow exception");
+        throw ::exception::Unknow("Unknow exception");
         break;
     }
 
@@ -61,13 +59,13 @@ const ::cl::Platform& Platform::findFromVendor(std::vector< ::cl::Platform >& _p
         case CL_SUCCESS :
             break;
         case CL_INVALID_PLATFORM :
-            throw ::titane::exception::Invalid("Invalid platform");
+            throw ::exception::Invalid("Invalid platform");
             break;
         case CL_INVALID_VALUE :
-            throw ::titane::exception::Invalid("Invalid value");
+            throw ::exception::Invalid("Invalid value");
             break;
         default :
-            throw ::titane::exception::Unknow("Unknow exception");
+            throw ::exception::Unknow("Unknow exception");
             break;
         }
         std::transform(vendor.begin(), vendor.end(),vendor.begin(), ::toupper);
@@ -76,8 +74,7 @@ const ::cl::Platform& Platform::findFromVendor(std::vector< ::cl::Platform >& _p
             return platform;
         }
     }
-    throw ::titane::exception::Not("No platform found from vendor : " + _vendor);
+    throw ::exception::Not("No platform found from vendor : " + _vendor);
 }
 
-}
 }

@@ -1,3 +1,5 @@
+#include "core/platform.hpp"
+
 #include <iostream>
 
 int main ()

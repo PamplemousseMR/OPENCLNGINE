@@ -1,6 +1,6 @@
-# Titane
+# OPENCLNGINE
 
-3D engine using OpenCL.
+OpenCL sandbox.
 
 ## Getting Started
 
@@ -17,7 +17,6 @@ Generate using cmake: `cmake`.
 ## Authors
 
 * **MANCIAUX Romain** - *Initial work* - [PamplemousseMR](https://github.com/PamplemousseMR).
-* **PECCARD Remi** - *Initial work* - [CesMwa](https://github.com/CesMwa).
 
 ## License
 

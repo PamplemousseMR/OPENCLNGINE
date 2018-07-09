@@ -5,8 +5,6 @@
 #include "exceptions/out.hpp"
 #include "exceptions/unknow.hpp"
 
-namespace titane
-{
 namespace core
 {
 
@@ -22,19 +20,19 @@ Context::Context(const Device& _device)
     case CL_SUCCESS :
         break;
     case CL_INVALID_PLATFORM :
-        throw ::titane::exception::Invalid("Invalid platform");
+        throw ::exception::Invalid("Invalid platform");
         break;
     case CL_INVALID_VALUE :
-        throw ::titane::exception::Invalid("Invalid value");
+        throw ::exception::Invalid("Invalid value");
         break;
     case CL_DEVICE_NOT_AVAILABLE :
-        throw ::titane::exception::Not("Device not available");
+        throw ::exception::Not("Device not available");
         break;
     case CL_OUT_OF_HOST_MEMORY :
-        throw ::titane::exception::Out("Out of host memory");
+        throw ::exception::Out("Out of host memory");
         break;
     default :
-        throw ::titane::exception::Unknow("Unknow exception");
+        throw ::exception::Unknow("Unknow exception");
         break;
     }
 
@@ -56,25 +54,24 @@ void Context::createCommandQueue(const Device& _device)
     case CL_SUCCESS :
         break;
     case CL_INVALID_CONTEXT  :
-        throw ::titane::exception::Invalid("Invalid context");
+        throw ::exception::Invalid("Invalid context");
         break;
     case CL_INVALID_DEVICE :
-        throw ::titane::exception::Invalid("Invalid device");
+        throw ::exception::Invalid("Invalid device");
         break;
     case CL_INVALID_VALUE :
-        throw ::titane::exception::Invalid("Invalid value");
+        throw ::exception::Invalid("Invalid value");
         break;
     case CL_INVALID_QUEUE_PROPERTIES  :
-        throw ::titane::exception::Invalid("Invalid queue properties");
+        throw ::exception::Invalid("Invalid queue properties");
         break;
     case CL_OUT_OF_HOST_MEMORY :
-        throw ::titane::exception::Out("Out of host memory");
+        throw ::exception::Out("Out of host memory");
         break;
     default :
-        throw ::titane::exception::Unknow("Unknow exception");
+        throw ::exception::Unknow("Unknow exception");
         break;
     }
 }
 
-}
 }
