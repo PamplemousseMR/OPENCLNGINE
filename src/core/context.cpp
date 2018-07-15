@@ -8,8 +8,6 @@
 namespace core
 {
 
-::cl::CommandQueue Context::s_commandQueue{};
-
 Context::Context(const Device& _device)
 {
     cl_int err;
@@ -37,11 +35,6 @@ Context::Context(const Device& _device)
     }
 
     createCommandQueue(_device);
-}
-
-void Context::makeCurrent() const noexcept
-{
-    s_commandQueue = m_commandQueue;
 }
 
 void Context::createCommandQueue(const Device& _device)

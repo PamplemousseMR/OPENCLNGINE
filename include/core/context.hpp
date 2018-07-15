@@ -10,15 +10,11 @@ namespace core
 class Context
 {
 
+    friend class Program;
+
 public:
 
     Context(const Device&);
-
-    void makeCurrent() const noexcept;
-
-private:
-
-    static ::cl::CommandQueue s_commandQueue;
 
 private:
 

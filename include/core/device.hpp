@@ -14,7 +14,7 @@ class Device
 
 public:
 
-    enum TITANE_DEVICE_TYPE
+    enum DEVICE_TYPE
     {
         DEFAULT,
         CPU,
@@ -24,7 +24,9 @@ public:
 
 public:
 
-    Device(const Platform&, const TITANE_DEVICE_TYPE& = DEFAULT);
+    Device(const Platform&, const DEVICE_TYPE& = DEFAULT);
+
+    friend std::ostream& operator<<(std::ostream& _o, const Device& _d) noexcept;
 
 private:
 

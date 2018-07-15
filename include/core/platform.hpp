@@ -12,7 +12,7 @@ class Platform
 
 public:
 
-    enum TITANE_PLATFORM_VENDOR
+    enum PLATFORM_VENDOR
     {
         DEFAULT,
         NVIDIA,
@@ -22,7 +22,9 @@ public:
 
 public:
 
-    Platform(const TITANE_PLATFORM_VENDOR& = DEFAULT);
+    Platform(const PLATFORM_VENDOR& = DEFAULT);
+
+    friend std::ostream& operator<<(std::ostream&, const Platform&) noexcept;
 
 private:
 

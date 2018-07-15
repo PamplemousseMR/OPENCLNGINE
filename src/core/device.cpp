@@ -7,7 +7,7 @@
 namespace core
 {
 
-Device::Device(const Platform& _platform,  const TITANE_DEVICE_TYPE& _type)
+Device::Device(const Platform& _platform,  const DEVICE_TYPE& _type)
 {
     std::vector< ::cl::Device > devices;
     cl_int err;
@@ -58,9 +58,22 @@ Device::Device(const Platform& _platform,  const TITANE_DEVICE_TYPE& _type)
         if(device.getInfo< CL_DEVICE_AVAILABLE >())
         {
             m_device = device;
+            return;
         }
     }
     throw ::exception::Not("Not available device found");
+}
+
+std::ostream& operator<<(std::ostream& _o, const Device& _d) noexcept
+{
+    _o << "[Device]" << std::endl;
+    _o << "\tVendor : " << _d.m_device.getInfo<CL_DEVICE_VENDOR>() << std::endl;
+    _o << "\tName : " << _d.m_device.getInfo<CL_DEVICE_NAME>() << std::endl;
+    _o << "\tType : " << _d.m_device.getInfo<CL_DEVICE_TYPE>() << std::endl;
+    _o << "\tVersion : " << _d.m_device.getInfo<CL_DEVICE_VERSION>() << std::endl;
+    _o << "\tDriver version : " << _d.m_device.getInfo<CL_DRIVER_VERSION>() << std::endl;
+    _o << "\tProfile : " << _d.m_device.getInfo<CL_DEVICE_PROFILE>();
+    return _o;
 }
 
 }

@@ -9,7 +9,7 @@
 namespace core
 {
 
-Platform::Platform(const TITANE_PLATFORM_VENDOR& _vendor)
+Platform::Platform(const PLATFORM_VENDOR& _vendor)
 {
     std::vector< ::cl::Platform > platforms;
     cl_int err = ::cl::Platform::get(&platforms);
@@ -75,6 +75,16 @@ const ::cl::Platform& Platform::findFromVendor(std::vector< ::cl::Platform >& _p
         }
     }
     throw ::exception::Not("No platform found from vendor : " + _vendor);
+}
+
+std::ostream& operator<<(std::ostream& _o, const Platform& _p) noexcept
+{
+    _o << "[Platform]" << std::endl;
+    _o << "\tVendor : " << _p.m_platform.getInfo<CL_PLATFORM_VENDOR>() << std::endl;
+    _o << "\tName : " << _p.m_platform.getInfo<CL_PLATFORM_NAME>() << std::endl;
+    _o << "\tVersion : " << _p.m_platform.getInfo<CL_PLATFORM_VERSION>() << std::endl;
+    _o << "\tProfile : " << _p.m_platform.getInfo<CL_PLATFORM_PROFILE>();
+    return _o;
 }
 
 }
