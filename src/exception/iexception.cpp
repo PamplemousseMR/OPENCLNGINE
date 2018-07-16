@@ -1,4 +1,4 @@
-#include "exceptions/iexception.hpp"
+#include "exception/iexception.hpp"
 
 namespace exception
 {

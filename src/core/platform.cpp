@@ -1,34 +1,47 @@
 #include "core/platform.hpp"
 
-#include "exceptions/invalid.hpp"
-#include "exceptions/not.hpp"
-#include "exceptions/unknow.hpp"
+#include "exception/helper.hpp"
+#include "exception/not.hpp"
 
 #include <algorithm>
 
 namespace core
 {
 
+std::string Platform::getInfo(const cl_platform_id _device, const cl_platform_info _name)
+{
+    size_t infoSize;
+    {
+        cl_int err = clGetPlatformInfo(_device, _name, 0, nullptr, &infoSize);
+        ::exception::checkCLError(err);
+    }
+    std::string info;
+    info.resize(infoSize);
+    {
+        cl_int err = clGetPlatformInfo(_device, _name, infoSize, &info[0], nullptr);
+        ::exception::checkCLError(err);
+    }
+    return info;
+}
+
+
 Platform::Platform(const PLATFORM_VENDOR& _vendor)
 {
-    std::vector< ::cl::Platform > platforms;
-    cl_int err = ::cl::Platform::get(&platforms);
+    cl_uint platformCount;
+    {
+        cl_int err = clGetPlatformIDs(0, nullptr, &platformCount);
+        ::exception::checkCLError(err);
+    }
 
-    if(platforms.empty())
+    if(platformCount == 0)
     {
         throw ::exception::Not("No platform found");
     }
 
-    switch(err)
+    std::vector< cl_platform_id > platforms(platformCount);
     {
-    case CL_SUCCESS :
-        break;
-    case CL_INVALID_VALUE :
-        throw ::exception::Invalid("Invalid value");
-        break;
-    default :
-        throw ::exception::Unknow("Unknow exception");
-        break;
+        cl_int err = clGetPlatformIDs(platformCount, &platforms[0], nullptr);
+        ::exception::checkCLError(err);
     }
 
     switch (_vendor)
@@ -48,28 +61,39 @@ Platform::Platform(const PLATFORM_VENDOR& _vendor)
     }
 }
 
-const ::cl::Platform& Platform::findFromVendor(std::vector< ::cl::Platform >& _platforms, const std::string& _vendor)
+std::string Platform::getName() const
 {
-    cl_int err;
-    for(const ::cl::Platform& platform : _platforms)
+    return Platform::getInfo(m_platform, CL_PLATFORM_NAME);
+}
+
+std::string Platform::getVendor() const
+{
+    return Platform::getInfo(m_platform, CL_PLATFORM_VENDOR);
+}
+
+std::string Platform::getVersion() const
+{
+    return Platform::getInfo(m_platform, CL_PLATFORM_VERSION);
+}
+
+std::string Platform::getProfile() const
+{
+    return Platform::getInfo(m_platform, CL_PLATFORM_PROFILE);
+}
+
+std::string Platform::getExtensions() const
+{
+    return Platform::getInfo(m_platform, CL_PLATFORM_EXTENSIONS);
+}
+
+cl_platform_id Platform::findFromVendor(std::vector< cl_platform_id >& _platforms, const std::string& _vendor)
+{
+    for(const cl_platform_id platform : _platforms)
     {
-        std::string vendor = platform.getInfo< CL_PLATFORM_VENDOR >(&err);
-        switch(err)
-        {
-        case CL_SUCCESS :
-            break;
-        case CL_INVALID_PLATFORM :
-            throw ::exception::Invalid("Invalid platform");
-            break;
-        case CL_INVALID_VALUE :
-            throw ::exception::Invalid("Invalid value");
-            break;
-        default :
-            throw ::exception::Unknow("Unknow exception");
-            break;
-        }
-        std::transform(vendor.begin(), vendor.end(),vendor.begin(), ::toupper);
-        if(vendor.find(_vendor) != std::string::npos)
+        std::string info = Platform::getInfo(platform, CL_PLATFORM_VERSION);
+        std::cout << info << std::endl;
+        std::transform(info.begin(), info.end(),info.begin(), ::toupper);
+        if(info.find(_vendor) != std::string::npos)
         {
             return platform;
         }
@@ -80,10 +104,10 @@ const ::cl::Platform& Platform::findFromVendor(std::vector< ::cl::Platform >& _p
 std::ostream& operator<<(std::ostream& _o, const Platform& _p) noexcept
 {
     _o << "[Platform]" << std::endl;
-    _o << "\tVendor : " << _p.m_platform.getInfo<CL_PLATFORM_VENDOR>() << std::endl;
-    _o << "\tName : " << _p.m_platform.getInfo<CL_PLATFORM_NAME>() << std::endl;
-    _o << "\tVersion : " << _p.m_platform.getInfo<CL_PLATFORM_VERSION>() << std::endl;
-    _o << "\tProfile : " << _p.m_platform.getInfo<CL_PLATFORM_PROFILE>();
+    _o << "\tVendor : " << _p.getVendor() << std::endl;
+    _o << "\tName : " << _p.getName() << std::endl;
+    _o << "\tVersion : " << _p.getVersion() << std::endl;
+    _o << "\tProfile : " << _p.getProfile();
     return _o;
 }
 

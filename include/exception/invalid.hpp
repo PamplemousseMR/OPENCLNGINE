@@ -1,6 +1,6 @@
 #pragma once
 
-#include "exceptions/iexception.hpp"
+#include "exception/iexception.hpp"
 
 #include <string>
 

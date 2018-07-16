@@ -2,7 +2,7 @@
 
 #include "core/device.hpp"
 
-#include <CL/cl.hpp>
+#include <CL/cl.h>
 
 namespace core
 {
@@ -17,14 +17,6 @@ public:
     Context(const Device&);
 
 private:
-
-    void createCommandQueue(const Device&);
-
-private:
-
-    ::cl::Context m_context {};
-
-    ::cl::CommandQueue m_commandQueue {};
 
 };
 

@@ -1,4 +1,4 @@
-#include "exceptions/out.hpp"
+#include "exception/out.hpp"
 
 namespace exception
 {

@@ -2,7 +2,7 @@
 
 #include "core/context.hpp"
 
-#include <CL/cl.hpp>
+#include <CL/cl.h>
 
 namespace core
 {
@@ -17,8 +17,6 @@ public:
     void build() const;
 
 private:
-
-    ::cl::Program m_program {};
 
 };
 
