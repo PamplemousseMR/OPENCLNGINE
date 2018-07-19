@@ -10,6 +10,8 @@ namespace core
 class Program
 {
 
+    friend class Kernel;
+
 public:
 
     Program(const Context&, const std::string&);
