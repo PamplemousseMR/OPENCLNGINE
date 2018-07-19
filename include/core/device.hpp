@@ -14,6 +14,10 @@ class Device
 
    friend class Context;
 
+   friend class CommandQueue;
+
+   friend class Program;
+
 public:
 
     enum DEVICE_TYPE
