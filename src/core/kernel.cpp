@@ -18,4 +18,16 @@ Kernel::~Kernel()
     ::exception::checkCLError(err);
 }
 
+void Kernel::enqueueNDRange(const CommandQueue& _commandQueue, size_t _global, size_t _local) const
+{
+    cl_int err = clEnqueueNDRangeKernel(_commandQueue.m_commandQueue, m_kernel, 1, nullptr, &_global, &_local, 0, nullptr, nullptr);
+    ::exception::checkCLError(err);
+}
+
+void Kernel::finish(const CommandQueue& _commandQueue)
+{
+    cl_int err = clFinish(_commandQueue.m_commandQueue);
+    ::exception::checkCLError(err);
+}
+
 }

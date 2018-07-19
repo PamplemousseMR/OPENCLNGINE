@@ -36,10 +36,10 @@ Buffer< T >::~Buffer()
 }
 
 template< typename T >
-const std::vector< T >& Buffer<T>::read(const CommandQueue& _commandQueue) const
+const std::vector< T >& Buffer< T >::read(const CommandQueue& _commandQueue)
 {
-    m_hostBuffer.resize(_size);
-    cl_int err = clEnqueueReadBuffer(_commandQueue.getCommandQueue(), m_deviceBuffer, CL_TRUE, 0, _size*sizeof(T), &m_hostBuffer[0], 0, nullptr, nullptr);
+    m_hostBuffer.resize(m_size);
+    cl_int err = clEnqueueReadBuffer(_commandQueue.getCommandQueue(), m_deviceBuffer, CL_TRUE, 0, m_size*sizeof(T), &m_hostBuffer[0], 0, nullptr, nullptr);
     ::exception::checkCLError(err);
     return m_hostBuffer;
 }

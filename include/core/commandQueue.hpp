@@ -11,6 +11,8 @@ namespace core
 class CommandQueue
 {
 
+    friend class Kernel;
+
 public:
 
     CommandQueue(const Context&, const Device&);

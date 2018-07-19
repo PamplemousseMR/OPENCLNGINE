@@ -19,6 +19,8 @@ template< typename T >
 class Buffer
 {
 
+    friend class Kernel;
+
 public:
 
     Buffer(const Context&, const CommandQueue&, BUFFER_FLAG, const T*, size_t);
@@ -27,7 +29,7 @@ public:
 
     ~Buffer();
 
-    const std::vector< T >& read(const CommandQueue&) const;
+    const std::vector< T >& read(const CommandQueue&);
 
     void write(const CommandQueue&, const T*) const;
 
