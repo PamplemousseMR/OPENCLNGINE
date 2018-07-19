@@ -2,12 +2,15 @@
 
 #include "exception/not.hpp"
 
+#include <assert.h>
+
 namespace core
 {
 
 template< typename T >
 T Device::getInfo(const cl_device_id _device, const cl_device_info _name)
 {
+    assert(_device != nullptr);
     T info;
     {
         cl_int err = clGetDeviceInfo(_device, _name, sizeof(T), &info, nullptr);
@@ -19,6 +22,7 @@ T Device::getInfo(const cl_device_id _device, const cl_device_info _name)
 template<>
 std::string Device::getInfo< std::string >(const cl_device_id _device, const cl_device_info _name)
 {
+    assert(_device != nullptr);
     size_t infoSize;
     {
         cl_int err = clGetDeviceInfo(_device, _name, 0, nullptr, &infoSize);

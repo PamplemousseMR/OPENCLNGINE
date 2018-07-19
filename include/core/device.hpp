@@ -6,8 +6,6 @@
 
 #include <CL/cl.h>
 
-#include <array>
-
 namespace core
 {
 

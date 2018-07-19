@@ -4,21 +4,23 @@
 #include "exception/not.hpp"
 
 #include <algorithm>
+#include <assert.h>
 
 namespace core
 {
 
-std::string Platform::getInfo(const cl_platform_id _device, const cl_platform_info _name)
+std::string Platform::getInfo(const cl_platform_id _platform, const cl_platform_info _name)
 {
+    assert(_platform != nullptr);
     size_t infoSize;
     {
-        cl_int err = clGetPlatformInfo(_device, _name, 0, nullptr, &infoSize);
+        cl_int err = clGetPlatformInfo(_platform, _name, 0, nullptr, &infoSize);
         ::exception::checkCLError(err);
     }
     std::string info;
     info.resize(infoSize);
     {
-        cl_int err = clGetPlatformInfo(_device, _name, infoSize, &info[0], nullptr);
+        cl_int err = clGetPlatformInfo(_platform, _name, infoSize, &info[0], nullptr);
         ::exception::checkCLError(err);
     }
     return info;
@@ -90,6 +92,7 @@ cl_platform_id Platform::findFromVendor(std::vector< cl_platform_id >& _platform
 {
     for(const cl_platform_id platform : _platforms)
     {
+        assert(platform != nullptr);
         std::string info = Platform::getInfo(platform, CL_PLATFORM_VERSION);
         std::cout << info << std::endl;
         std::transform(info.begin(), info.end(),info.begin(), ::toupper);
