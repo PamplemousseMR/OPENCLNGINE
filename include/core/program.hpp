@@ -20,7 +20,7 @@ public:
 
     size_t getNumKernel() const;
 
-    std::string getKernelNames();
+    std::vector< std::string > getKernelNames();
 
 private:
 

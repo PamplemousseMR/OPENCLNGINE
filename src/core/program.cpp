@@ -6,6 +6,7 @@
 #include <CL/cl.h>
 
 #include <assert.h>
+#include <sstream>
 
 namespace core
 {
@@ -102,9 +103,18 @@ size_t Program::getNumKernel() const
     return Program::getInfo< size_t >(m_program, CL_PROGRAM_NUM_KERNELS);
 }
 
-std::string Program::getKernelNames()
+std::vector<std::string> Program::getKernelNames()
 {
-    return Program::getInfo< std::string >(m_program, CL_PROGRAM_KERNEL_NAMES);
+    std::string names = Program::getInfo< std::string >(m_program, CL_PROGRAM_KERNEL_NAMES);
+
+    std::vector< std::string > res;
+    std::istringstream ss(names);
+    std::string token;
+    while(std::getline(ss, token, ';'))
+    {
+        res.push_back(token);
+    }
+    return res;
 }
 
 }
