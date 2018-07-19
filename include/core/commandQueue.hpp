@@ -17,6 +17,8 @@ public:
 
     ~CommandQueue();
 
+    const cl_command_queue getCommandQueue() const;
+
 private:
 
     cl_command_queue m_commandQueue {nullptr};

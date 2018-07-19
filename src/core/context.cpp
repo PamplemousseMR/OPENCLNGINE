@@ -18,4 +18,9 @@ Context::~Context()
     ::exception::checkCLError(err);
 }
 
+const cl_context Context::getContext() const
+{
+    return m_context;
+}
+
 }

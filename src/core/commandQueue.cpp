@@ -18,4 +18,9 @@ CommandQueue::~CommandQueue()
     ::exception::checkCLError(err);
 }
 
+const cl_command_queue CommandQueue::getCommandQueue() const
+{
+    return m_commandQueue;
+}
+
 }

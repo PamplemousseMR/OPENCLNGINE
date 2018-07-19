@@ -20,6 +20,8 @@ public:
 
     ~Context();
 
+    const cl_context getContext() const;
+
 private:
 
     cl_context m_context {nullptr};
