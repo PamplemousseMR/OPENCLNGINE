@@ -94,7 +94,6 @@ cl_platform_id Platform::findFromVendor(std::vector< cl_platform_id >& _platform
     {
         assert(platform != nullptr);
         std::string info = Platform::getInfo(platform, CL_PLATFORM_VERSION);
-        std::cout << info << std::endl;
         std::transform(info.begin(), info.end(),info.begin(), ::toupper);
         if(info.find(_vendor) != std::string::npos)
         {
