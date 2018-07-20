@@ -17,17 +17,23 @@ public:
 
     ~Kernel();
 
-    template< typename T >
-    void setArg(const Buffer< T >&, uint32_t) const;
-
-    template< typename T >
-    void setArg(T, uint32_t) const;
-
-    void enqueueNDRange(const CommandQueue&, size_t, size_t);
+    template< typename... A >
+    void enqueueNDRange(const CommandQueue&, size_t, size_t, const A&...);
 
     void finish();
 
 private:
+
+    void setArgs(uint32_t) const;
+
+    template< typename T, typename... A>
+    void setArgs(uint32_t, const T&, const A&...) const;
+
+    template< typename T >
+    void setArg(const Buffer< T >&, uint32_t) const;
+
+    template< typename T >
+    void setArg(const T&, uint32_t) const;
 
     Kernel(const cl_program, const std::string&);
 

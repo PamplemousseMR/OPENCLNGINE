@@ -181,7 +181,7 @@ public:
 
     //uint32_t getImageBaseAddressAlignment() const;
 
-    friend std::ostream& operator<<(std::ostream& _o, const Device& _d) noexcept;
+    friend std::ostream& operator<<(std::ostream&, const Device&) noexcept;
 
 private:
 

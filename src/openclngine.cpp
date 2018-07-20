@@ -61,13 +61,7 @@ int main ()
     bufferB.write(commandQueue, hostBufferB);
     ::core::Buffer< double > bufferC = context.createBuffer< double >(::core::WRITE, bufferLength);
 
-    kernel.setArg(bufferA, 0);
-    kernel.setArg(bufferB, 1);
-    kernel.setArg(bufferC, 2);
-    kernel.setArg(2, 3);
-    kernel.setArg(Container{1.2, 3},4);
-
-    kernel.enqueueNDRange(commandQueue, bufferLength, 64);
+    kernel.enqueueNDRange(commandQueue, bufferLength, 64, bufferA, bufferB, bufferC, 2, Container{1.2, 3});
     kernel.finish();
 
     std::vector< double > res = bufferC.read(commandQueue);
