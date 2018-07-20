@@ -194,7 +194,7 @@ size_t Device::getImage3dMaxDepth() const
 
 bool Device::getImageSupport() const
 {
-    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_IMAGE_SUPPORT);
+    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_IMAGE_SUPPORT) == CL_TRUE;
 }
 
 size_t Device::getMaxParameterSize() const
@@ -264,7 +264,7 @@ uint64_t Device::getLocalMemSize() const
 
 bool Device::getErrorCorrectionSupport() const
 {
-    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_ERROR_CORRECTION_SUPPORT);
+    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_ERROR_CORRECTION_SUPPORT) == CL_TRUE;
 }
 
 size_t Device::getProfilingTimerResolution() const
@@ -274,17 +274,17 @@ size_t Device::getProfilingTimerResolution() const
 
 bool Device::getEndianLittle() const
 {
-    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_ENDIAN_LITTLE);
+    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_ENDIAN_LITTLE) == CL_TRUE;
 }
 
 bool Device::getAvailable() const
 {
-    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_AVAILABLE);
+    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_AVAILABLE) == CL_TRUE;
 }
 
 bool Device::getCompilerAvailable() const
 {
-    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_COMPILER_AVAILABLE);
+    return Device::getInfo< cl_bool >(m_device, CL_DEVICE_COMPILER_AVAILABLE) == CL_TRUE;
 }
 
 uint64_t Device::getExecutionCapabilities() const
