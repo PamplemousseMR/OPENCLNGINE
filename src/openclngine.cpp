@@ -22,7 +22,7 @@ const std::string source =
     "Container;"
     ""
     "__kernel void vector_add(__global const int* _bufferA, __global const int* _bufferB, __global double* _bufferC, int _factor, Container _container) {"
-    "   int i = get_global_id(0);"
+    "   int i = get_global_id(0) * get_global_size(0) + get_global_id(1);"
     "   _bufferC[i] = (_bufferA[i] + _bufferB[i]) * _factor + _container.m_d + _container.m_i;"
     "}";
 
@@ -61,7 +61,8 @@ int main ()
     bufferB.write(hostBufferB);
     ::core::Buffer< double > bufferC = context.createBuffer< double >(commandQueue, ::core::WRITE, bufferLength);
 
-    kernel.enqueueNDRange(commandQueue, bufferLength, 64, bufferA, bufferB, bufferC, 2, Container{1.2, 3});
+    size_t globalWorkSize = static_cast< size_t >(std::sqrt(bufferLength));
+    kernel.enqueueNDRange(commandQueue, 2, {globalWorkSize,globalWorkSize}, {globalWorkSize/2,globalWorkSize/2}, bufferA, bufferB, bufferC, 2, Container{1.2, 3});
     kernel.finish();
 
     std::vector< double > res = bufferC.read();

@@ -18,7 +18,7 @@ public:
     ~Kernel();
 
     template< typename... A >
-    void enqueueNDRange(const CommandQueue&, size_t, size_t, const A&...);
+    void enqueueNDRange(const CommandQueue&, uint32_t, const std::vector< size_t >&, const std::vector< size_t >&, const A&...);
 
     void finish();
 
