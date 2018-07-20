@@ -23,7 +23,7 @@ class Buffer
 
 public:
 
-    Buffer(const Context&, const CommandQueue&, BUFFER_FLAG, const T*, size_t);
+    Buffer(const Context&, const CommandQueue&, BUFFER_FLAG, const std::vector< T >&);
 
     Buffer(const Context&, BUFFER_FLAG, size_t);
 
@@ -31,7 +31,7 @@ public:
 
     const std::vector< T >& read(const CommandQueue&);
 
-    void write(const CommandQueue&, const T*) const;
+    void write(const CommandQueue&, const std::vector< T >&) const;
 
 private:
 

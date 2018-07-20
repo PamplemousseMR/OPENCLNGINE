@@ -8,15 +8,14 @@ namespace core
 {
 
 template< typename T >
-Buffer< T >::Buffer(const Context& _context, const CommandQueue& _commandQueue, BUFFER_FLAG _flag, const T* _buffer, size_t _size)
+Buffer< T >::Buffer(const Context& _context, const CommandQueue& _commandQueue, BUFFER_FLAG _flag, const std::vector< T >& _buffer)
 {
-    assert(_buffer != nullptr);
+    m_size = _buffer.size();
     cl_int err;
-    m_deviceBuffer = clCreateBuffer(_context.getContext(), _flag,  _size*sizeof(T), nullptr, &err);
+    m_deviceBuffer = clCreateBuffer(_context.getContext(), _flag,  m_size*sizeof(T), nullptr, &err);
     ::exception::checkCLError(err);
-    err = clEnqueueWriteBuffer(_commandQueue.getCommandQueue(), m_deviceBuffer, CL_TRUE, 0, _size*sizeof(T), _buffer, 0, nullptr, nullptr);
+    err = clEnqueueWriteBuffer(_commandQueue.getCommandQueue(), m_deviceBuffer, CL_TRUE, 0, m_size*sizeof(T), &_buffer[0], 0, nullptr, nullptr);
     ::exception::checkCLError(err);
-    m_size = _size;
 }
 
 template< typename T >
@@ -45,10 +44,9 @@ const std::vector< T >& Buffer< T >::read(const CommandQueue& _commandQueue)
 }
 
 template< typename T >
-void Buffer< T >::write(const CommandQueue& _commandQueue, const T* _buffer) const
+void Buffer< T >::write(const CommandQueue& _commandQueue, const std::vector< T >& _buffer) const
 {
-    assert(_buffer != nullptr);
-    cl_int err = clEnqueueWriteBuffer(_commandQueue.getCommandQueue(), m_deviceBuffer, CL_TRUE, 0, m_size*sizeof(T), _buffer, 0, nullptr, nullptr);
+    cl_int err = clEnqueueWriteBuffer(_commandQueue.getCommandQueue(), m_deviceBuffer, CL_TRUE, 0, m_size*sizeof(T), &_buffer[0], 0, nullptr, nullptr);
     ::exception::checkCLError(err);
 }
 

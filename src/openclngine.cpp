@@ -40,9 +40,9 @@ int main ()
     program.build(device);
     ::core::Kernel kernel(program, "vector_add");
 
-    ::core::Buffer< int > bufferA(context, commandQueue, ::core::READ, &hostBufferA[0], bufferLength);
+    ::core::Buffer< int > bufferA(context, commandQueue, ::core::READ, hostBufferA);
     ::core::Buffer< int > bufferB(context, ::core::READ, bufferLength);
-    bufferB.write(commandQueue, &hostBufferB[0]);
+    bufferB.write(commandQueue, hostBufferB);
     ::core::Buffer< int > bufferC(context, ::core::WRITE, bufferLength);
 
     kernel.setArg(bufferA, 0);
