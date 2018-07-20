@@ -20,6 +20,9 @@ public:
     template< typename T >
     void setArg(const Buffer< T >&, uint32_t) const;
 
+    template< typename T >
+    void setArg(T, uint32_t) const;
+
     void enqueueNDRange(const CommandQueue&, size_t, size_t);
 
     void finish();

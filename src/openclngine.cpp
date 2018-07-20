@@ -14,10 +14,25 @@
 #include <string>
 
 const std::string source =
-    "__kernel void vector_add(__global const int *A, __global const int *B, __global int *C) {"
+    "typedef struct container_t"
+    "{"
+    "   double m_d;"
+    "   int m_i;"
+    "}"
+    "Container;"
+    ""
+    "__kernel void vector_add(__global const int* _bufferA, __global const int* _bufferB, __global double* _bufferC, int _factor, Container _container) {"
     "   int i = get_global_id(0);"
-    "   C[i] = A[i] + B[i];"
+    "   _bufferC[i] = (_bufferA[i] + _bufferB[i]) * _factor + _container.m_d + _container.m_i;"
     "}";
+
+
+typedef struct container_t
+{
+   double m_d;
+   int m_i;
+}
+Container;
 
 int main ()
 {
@@ -44,17 +59,19 @@ int main ()
     ::core::Buffer< int > bufferA = context.createBuffer(commandQueue, ::core::READ, hostBufferA);
     ::core::Buffer< int > bufferB = context.createBuffer< int >(::core::READ, bufferLength);
     bufferB.write(commandQueue, hostBufferB);
-    ::core::Buffer< int > bufferC = context.createBuffer< int >(::core::WRITE, bufferLength);
+    ::core::Buffer< double > bufferC = context.createBuffer< double >(::core::WRITE, bufferLength);
 
     kernel.setArg(bufferA, 0);
     kernel.setArg(bufferB, 1);
     kernel.setArg(bufferC, 2);
+    kernel.setArg(2, 3);
+    kernel.setArg(Container{1.2, 3},4);
 
     kernel.enqueueNDRange(commandQueue, bufferLength, 64);
     kernel.finish();
 
-    std::vector< int > res = bufferC.read(commandQueue);
-    for(int val : res)
+    std::vector< double > res = bufferC.read(commandQueue);
+    for(double val : res)
     {
         std::cout << val << std::endl;
     }
