@@ -1,7 +1,5 @@
 #pragma once
 
-#include "core/context.hpp"
-
 #include "exception/helper.hpp"
 
 #include <CL/cl.h>
@@ -15,6 +13,8 @@ class Device
 {
 
    friend class Context;
+
+   friend class Program;
 
 public:
 

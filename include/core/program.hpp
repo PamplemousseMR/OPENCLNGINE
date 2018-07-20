@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/device.hpp"
 #include "core/kernel.hpp"
 
 #include <CL/cl.h>
@@ -33,7 +34,7 @@ private:
 
 private:
 
-    Program(const cl_context, const cl_device_id, const std::string&);
+    Program(const cl_context, const Device&, const std::string&);
 
 private:
 
@@ -41,7 +42,7 @@ private:
 
     std::string m_sources {""};
 
-    const cl_device_id m_device;
+    const Device m_device;
 
 };
 

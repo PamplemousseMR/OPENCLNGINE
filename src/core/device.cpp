@@ -1,5 +1,7 @@
 #include "core/device.hpp"
 
+#include "core/context.hpp"
+
 #include "exception/not.hpp"
 
 #include <assert.h>
@@ -78,7 +80,7 @@ Device::~Device()
 
 Context Device::createContext() const
 {
-    return Context(m_device);
+    return Context(*this);
 }
 
 

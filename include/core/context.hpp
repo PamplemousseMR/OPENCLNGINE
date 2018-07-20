@@ -2,6 +2,7 @@
 
 #include "core/buffer.hpp"
 #include "core/commandQueue.hpp"
+#include "core/device.hpp"
 #include "core/program.hpp"
 
 #include <CL/cl.h>
@@ -14,7 +15,7 @@ class Context
 
 public:
 
-    Context(const cl_device_id);
+    Context(const Device&);
 
     ~Context();
 
@@ -32,7 +33,7 @@ private:
 
     cl_context m_context {nullptr};
 
-    const cl_device_id m_device;
+    const Device& m_device;
 
 };
 
