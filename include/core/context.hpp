@@ -1,6 +1,8 @@
 #pragma once
 
+#include "core/commandQueue.hpp"
 #include "core/device.hpp"
+#include "core/program.hpp"
 
 #include <CL/cl.h>
 
@@ -22,9 +24,15 @@ public:
 
     const cl_context getContext() const;
 
+    CommandQueue createCommandQueue() const;
+
+    Program createProgram(const std::string&) const;
+
 private:
 
     cl_context m_context {nullptr};
+
+    const Device& m_device;
 
 };
 

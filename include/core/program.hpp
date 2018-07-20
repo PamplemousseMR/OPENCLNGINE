@@ -12,9 +12,9 @@ class Program
 
     friend class Kernel;
 
-public:
+    friend class Context;
 
-    Program(const Context&, const std::string&);
+public:
 
     ~Program();
 
@@ -28,6 +28,10 @@ private:
 
     template< typename T >
     static T getInfo(const cl_program, const cl_profiling_info);
+
+private:
+
+    Program(const Context&, const std::string&);
 
 private:
 

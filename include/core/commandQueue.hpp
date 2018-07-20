@@ -13,13 +13,17 @@ class CommandQueue
 
     friend class Kernel;
 
-public:
+    friend class Context;
 
-    CommandQueue(const Context&, const Device&);
+public:
 
     ~CommandQueue();
 
     const cl_command_queue getCommandQueue() const;
+
+private:
+
+    CommandQueue(const Context&, const Device&);
 
 private:
 

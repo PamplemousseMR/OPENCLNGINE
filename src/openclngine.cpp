@@ -34,10 +34,11 @@ int main ()
     ::core::Device device(platform);
     std::cout << device << std::endl;
     ::core::Context context(device);
-    ::core::CommandQueue commandQueue(context, device);
 
-    ::core::Program program(context, source);
+    ::core::CommandQueue commandQueue = context.createCommandQueue();
+    ::core::Program program = context.createProgram(source);
     program.build(device);
+
     ::core::Kernel kernel(program, "vector_add");
 
     ::core::Buffer< int > bufferA(context, commandQueue, ::core::READ, hostBufferA);
