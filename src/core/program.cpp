@@ -60,7 +60,7 @@ Program::~Program()
 void Program::build(const Device& _device) const
 {
     cl_int err = clBuildProgram(m_program, 1, &_device.m_device, nullptr, nullptr, nullptr);
-    if(err != CL_SUCCESS)
+    if(err == CL_BUILD_PROGRAM_FAILURE)
     {
         size_t infoSize;
         {
