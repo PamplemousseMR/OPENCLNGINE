@@ -1,10 +1,12 @@
 #pragma once
 
-#include "core/platform.hpp"
+#include "core/context.hpp"
 
 #include "exception/helper.hpp"
 
 #include <CL/cl.h>
+
+#include <vector>
 
 namespace core
 {
@@ -13,10 +15,6 @@ class Device
 {
 
    friend class Context;
-
-   friend class CommandQueue;
-
-   friend class Program;
 
 public:
 
@@ -31,9 +29,11 @@ public:
 
 public:
 
-    Device(const Platform&, const DEVICE_TYPE& = DEFAULT);
+    Device(const cl_platform_id, const DEVICE_TYPE& = DEFAULT);
 
     ~Device();
+
+    Context createContext() const;
 
     uint64_t getType() const;
 

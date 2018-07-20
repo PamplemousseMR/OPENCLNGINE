@@ -26,7 +26,6 @@ std::string Platform::getInfo(const cl_platform_id _platform, const cl_platform_
     return info;
 }
 
-
 Platform::Platform(const PLATFORM_VENDOR& _vendor)
 {
     cl_uint platformCount;
@@ -62,6 +61,12 @@ Platform::Platform(const PLATFORM_VENDOR& _vendor)
         break;
     }
 }
+
+Device Platform::createDevice(Device::DEVICE_TYPE _type) const
+{
+    return Device(m_platform, _type);
+}
+
 
 std::string Platform::getName() const
 {

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/kernel.hpp"
+
 #include <CL/cl.h>
 
 #include <vector>
@@ -10,8 +12,6 @@ namespace core
 class Program
 {
 
-    friend class Kernel;
-
     friend class Context;
 
 public:
@@ -19,6 +19,8 @@ public:
     ~Program();
 
     void build() const;
+
+    Kernel createKernel(const std::string&) const;
 
     size_t getNumKernel() const;
 

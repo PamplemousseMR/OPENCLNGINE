@@ -99,6 +99,11 @@ void Program::build() const
     while(buildStatus == CL_BUILD_IN_PROGRESS);
 }
 
+Kernel Program::createKernel(const std::string& _name) const
+{
+    return Kernel(m_program, _name);
+}
+
 size_t Program::getNumKernel() const
 {
     return Program::getInfo< size_t >(m_program, CL_PROGRAM_NUM_KERNELS);

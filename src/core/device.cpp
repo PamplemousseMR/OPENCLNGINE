@@ -37,11 +37,11 @@ std::string Device::getInfo< std::string >(const cl_device_id _device, const cl_
     return info;
 }
 
-Device::Device(const Platform& _platform,  const DEVICE_TYPE& _type)
+Device::Device(const cl_platform_id _platform,  const DEVICE_TYPE& _type)
 {
     cl_uint deviceCount;
     {
-        cl_int err = clGetDeviceIDs(_platform.m_platform, _type, 0, nullptr, &deviceCount);
+        cl_int err = clGetDeviceIDs(_platform, _type, 0, nullptr, &deviceCount);
         ::exception::checkCLError(err);
     }
 
@@ -52,7 +52,7 @@ Device::Device(const Platform& _platform,  const DEVICE_TYPE& _type)
 
     std::vector< cl_device_id > devices(deviceCount);
     {
-        cl_int err = clGetDeviceIDs(_platform.m_platform, _type, deviceCount, &devices[0], nullptr);
+        cl_int err = clGetDeviceIDs(_platform, _type, deviceCount, &devices[0], nullptr);
         ::exception::checkCLError(err);
     }
 
@@ -75,6 +75,12 @@ Device::~Device()
     cl_int err = clReleaseDevice(m_device);
     ::exception::checkCLError(err);
 }
+
+Context Device::createContext() const
+{
+    return Context(m_device);
+}
+
 
 uint64_t Device::getType() const
 {

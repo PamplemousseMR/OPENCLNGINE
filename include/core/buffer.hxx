@@ -8,21 +8,21 @@ namespace core
 {
 
 template< typename T >
-Buffer< T >::Buffer(const Context& _context, const CommandQueue& _commandQueue, BUFFER_FLAG _flag, const std::vector< T >& _buffer)
+Buffer< T >::Buffer(const cl_context _context, const CommandQueue& _commandQueue, BUFFER_FLAG _flag, const std::vector< T >& _buffer)
 {
     m_size = _buffer.size();
     cl_int err;
-    m_deviceBuffer = clCreateBuffer(_context.getContext(), _flag,  m_size*sizeof(T), nullptr, &err);
+    m_deviceBuffer = clCreateBuffer(_context, _flag,  m_size*sizeof(T), nullptr, &err);
     ::exception::checkCLError(err);
     err = clEnqueueWriteBuffer(_commandQueue.getCommandQueue(), m_deviceBuffer, CL_TRUE, 0, m_size*sizeof(T), &_buffer[0], 0, nullptr, nullptr);
     ::exception::checkCLError(err);
 }
 
 template< typename T >
-Buffer< T >::Buffer(const Context& _context, BUFFER_FLAG _flag, size_t _size)
+Buffer< T >::Buffer(const cl_context _context, BUFFER_FLAG _flag, size_t _size)
 {
     cl_int err;
-    m_deviceBuffer = clCreateBuffer(_context.getContext(), _flag,  _size*sizeof(T), nullptr, &err);
+    m_deviceBuffer = clCreateBuffer(_context, _flag,  _size*sizeof(T), nullptr, &err);
     ::exception::checkCLError(err);
     m_size = _size;
 }

@@ -5,11 +5,11 @@
 namespace core
 {
 
-Context::Context(const Device& _device) :
+Context::Context(const cl_device_id _device) :
     m_device(_device)
 {
     cl_int err;
-    m_context = clCreateContext(nullptr, 1, &m_device.m_device, nullptr, nullptr, &err);
+    m_context = clCreateContext(nullptr, 1, &m_device, nullptr, nullptr, &err);
     ::exception::checkCLError(err);
 }
 
@@ -19,19 +19,14 @@ Context::~Context()
     ::exception::checkCLError(err);
 }
 
-const cl_context Context::getContext() const
-{
-    return m_context;
-}
-
 CommandQueue Context::createCommandQueue() const
 {
-    return CommandQueue(m_context, m_device.m_device);
+    return CommandQueue(m_context, m_device);
 }
 
 Program Context::createProgram(const std::string& _sources) const
 {
-    return Program(m_context, m_device.m_device, _sources);
+    return Program(m_context, m_device, _sources);
 }
 
 }

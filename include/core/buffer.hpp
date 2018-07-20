@@ -1,9 +1,10 @@
 #pragma once
 
 #include "core/commandQueue.hpp"
-#include "core/context.hpp"
 
 #include <CL/cl.h>
+
+#include <vector>
 
 namespace core
 {
@@ -21,17 +22,21 @@ class Buffer
 
     friend class Kernel;
 
+    friend class Context;
+
 public:
-
-    Buffer(const Context&, const CommandQueue&, BUFFER_FLAG, const std::vector< T >&);
-
-    Buffer(const Context&, BUFFER_FLAG, size_t);
 
     ~Buffer();
 
     const std::vector< T >& read(const CommandQueue&);
 
     void write(const CommandQueue&, const std::vector< T >&) const;
+
+private:
+
+    Buffer(const cl_context, const CommandQueue&, BUFFER_FLAG, const std::vector< T >&);
+
+    Buffer(const cl_context, BUFFER_FLAG, size_t);
 
 private:
 

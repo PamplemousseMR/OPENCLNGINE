@@ -2,6 +2,7 @@
 #include "core/buffer.hxx"
 #include "core/commandQueue.hpp"
 #include "core/context.hpp"
+#include "core/context.hxx"
 #include "core/device.hpp"
 #include "core/kernel.hpp"
 #include "core/kernel.hxx"
@@ -30,28 +31,27 @@ int main ()
     }
 
     ::core::Platform platform;
-    std::cout << platform << std::endl;
-    ::core::Device device(platform);
-    std::cout << device << std::endl;
-    ::core::Context context(device);
+    ::core::Device device = platform.createDevice();
+    ::core::Context context = device.createContext();
 
     ::core::CommandQueue commandQueue = context.createCommandQueue();
+
     ::core::Program program = context.createProgram(source);
     program.build();
 
-    ::core::Kernel kernel(program, "vector_add");
+    ::core::Kernel kernel = program.createKernel("vector_add");
 
-    ::core::Buffer< int > bufferA(context, commandQueue, ::core::READ, hostBufferA);
-    ::core::Buffer< int > bufferB(context, ::core::READ, bufferLength);
+    ::core::Buffer< int > bufferA = context.createBuffer(commandQueue, ::core::READ, hostBufferA);
+    ::core::Buffer< int > bufferB = context.createBuffer< int >(::core::READ, bufferLength);
     bufferB.write(commandQueue, hostBufferB);
-    ::core::Buffer< int > bufferC(context, ::core::WRITE, bufferLength);
+    ::core::Buffer< int > bufferC = context.createBuffer< int >(::core::WRITE, bufferLength);
 
     kernel.setArg(bufferA, 0);
     kernel.setArg(bufferB, 1);
     kernel.setArg(bufferC, 2);
 
     kernel.enqueueNDRange(commandQueue, bufferLength, 64);
-    kernel.finish(commandQueue);
+    kernel.finish();
 
     std::vector< int > res = bufferC.read(commandQueue);
     for(int val : res)

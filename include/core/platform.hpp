@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/device.hpp"
+
 #include <CL/cl.h>
 
 #include <iostream>
@@ -26,6 +28,8 @@ public:
 public:
 
     Platform(const PLATFORM_VENDOR& = DEFAULT);
+
+    Device createDevice(Device::DEVICE_TYPE = Device::DEFAULT) const;
 
     std::string getName() const;
 
