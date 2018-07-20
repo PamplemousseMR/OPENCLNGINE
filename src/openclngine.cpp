@@ -20,13 +20,13 @@ const std::string source =
 
 int main ()
 {
-    const int LIST_SIZE = 1024;
-    int* A = (int*)malloc(sizeof(int)*LIST_SIZE);
-    int* B = (int*)malloc(sizeof(int)*LIST_SIZE);
-    for(int i = 0; i < LIST_SIZE; ++i)
+    const int bufferLength = 1024;
+    std::vector< int > hostBufferA;
+    std::vector< int > hostBufferB;
+    for(int i = 0; i < bufferLength; ++i)
     {
-        A[i] = i;
-        B[i] = i;
+        hostBufferA.push_back(i);
+        hostBufferB.push_back(i);
     }
 
     ::core::Platform platform;
@@ -40,16 +40,16 @@ int main ()
     program.build(device);
     ::core::Kernel kernel(program, "vector_add");
 
-    ::core::Buffer< int > bufferA(context, commandQueue, ::core::READ, A, LIST_SIZE);
-    ::core::Buffer< int > bufferB(context, ::core::READ, LIST_SIZE);
-    bufferB.write(commandQueue, B);
-    ::core::Buffer< int > bufferC(context, ::core::WRITE, LIST_SIZE);
+    ::core::Buffer< int > bufferA(context, commandQueue, ::core::READ, &hostBufferA[0], bufferLength);
+    ::core::Buffer< int > bufferB(context, ::core::READ, bufferLength);
+    bufferB.write(commandQueue, &hostBufferB[0]);
+    ::core::Buffer< int > bufferC(context, ::core::WRITE, bufferLength);
 
     kernel.setArg(bufferA, 0);
     kernel.setArg(bufferB, 1);
     kernel.setArg(bufferC, 2);
 
-    kernel.enqueueNDRange(commandQueue, LIST_SIZE, 64);
+    kernel.enqueueNDRange(commandQueue, bufferLength, 64);
     kernel.finish(commandQueue);
 
     std::vector< int > res = bufferC.read(commandQueue);
@@ -57,9 +57,6 @@ int main ()
     {
         std::cout << val << std::endl;
     }
-
-    free(A);
-    free(B);
 
     return EXIT_SUCCESS;
 }
