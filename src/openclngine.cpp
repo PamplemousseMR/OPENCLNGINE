@@ -37,7 +37,7 @@ int main ()
 
     ::core::CommandQueue commandQueue = context.createCommandQueue();
     ::core::Program program = context.createProgram(source);
-    program.build(device);
+    program.build();
 
     ::core::Kernel kernel(program, "vector_add");
 

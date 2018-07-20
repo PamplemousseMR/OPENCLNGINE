@@ -18,7 +18,7 @@ public:
 
     ~Program();
 
-    void build(const Device&) const;
+    void build() const;
 
     size_t getNumKernel() const;
 
@@ -38,6 +38,8 @@ private:
     cl_program m_program {nullptr};
 
     std::string m_sources {""};
+
+    const Context& m_context;
 
 };
 
