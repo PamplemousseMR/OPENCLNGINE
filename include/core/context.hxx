@@ -10,9 +10,9 @@ Buffer< T > Context::createBuffer(const CommandQueue& _commandQueue, BUFFER_FLAG
 }
 
 template< typename T >
-Buffer< T > Context::createBuffer(BUFFER_FLAG _flag, size_t _size) const
+Buffer< T > Context::createBuffer(const CommandQueue& _commandQueue, BUFFER_FLAG _flag, size_t _size) const
 {
-    return Buffer< T >(m_context, _flag, _size);
+    return Buffer< T >(m_context, _commandQueue, _flag, _size);
 }
 
 }

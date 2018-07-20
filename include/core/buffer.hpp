@@ -28,15 +28,15 @@ public:
 
     ~Buffer();
 
-    const std::vector< T >& read(const CommandQueue&);
+    const std::vector< T >& read();
 
-    void write(const CommandQueue&, const std::vector< T >&) const;
+    void write(const std::vector< T >&) const;
 
 private:
 
     Buffer(const cl_context, const CommandQueue&, BUFFER_FLAG, const std::vector< T >&);
 
-    Buffer(const cl_context, BUFFER_FLAG, size_t);
+    Buffer(const cl_context, const CommandQueue&, BUFFER_FLAG, size_t);
 
 private:
 
@@ -45,6 +45,8 @@ private:
     std::vector< T > m_hostBuffer {};
 
     size_t m_size {0};
+
+    const CommandQueue& m_commandQueue;
 
 };
 

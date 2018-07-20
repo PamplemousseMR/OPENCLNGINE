@@ -27,7 +27,7 @@ public:
     Buffer< T > createBuffer(const CommandQueue&, BUFFER_FLAG, const std::vector< T >&) const;
 
     template< typename T >
-    Buffer< T > createBuffer(BUFFER_FLAG, size_t) const;
+    Buffer< T > createBuffer(const CommandQueue&, BUFFER_FLAG, size_t) const;
 
 private:
 

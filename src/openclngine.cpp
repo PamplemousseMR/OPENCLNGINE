@@ -57,14 +57,14 @@ int main ()
     ::core::Kernel kernel = program.createKernel("vector_add");
 
     ::core::Buffer< int > bufferA = context.createBuffer(commandQueue, ::core::READ, hostBufferA);
-    ::core::Buffer< int > bufferB = context.createBuffer< int >(::core::READ, bufferLength);
-    bufferB.write(commandQueue, hostBufferB);
-    ::core::Buffer< double > bufferC = context.createBuffer< double >(::core::WRITE, bufferLength);
+    ::core::Buffer< int > bufferB = context.createBuffer< int >(commandQueue, ::core::READ, bufferLength);
+    bufferB.write(hostBufferB);
+    ::core::Buffer< double > bufferC = context.createBuffer< double >(commandQueue, ::core::WRITE, bufferLength);
 
     kernel.enqueueNDRange(commandQueue, bufferLength, 64, bufferA, bufferB, bufferC, 2, Container{1.2, 3});
     kernel.finish();
 
-    std::vector< double > res = bufferC.read(commandQueue);
+    std::vector< double > res = bufferC.read();
     for(double val : res)
     {
         std::cout << val << std::endl;
