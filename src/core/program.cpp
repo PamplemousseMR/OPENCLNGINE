@@ -103,7 +103,7 @@ size_t Program::getNumKernel() const
     return Program::getInfo< size_t >(m_program, CL_PROGRAM_NUM_KERNELS);
 }
 
-std::vector<std::string> Program::getKernelNames()
+std::vector<std::string> Program::getKernelNames() const
 {
     std::string names = Program::getInfo< std::string >(m_program, CL_PROGRAM_KERNEL_NAMES);
 

@@ -24,7 +24,7 @@ void Kernel::enqueueNDRange(const CommandQueue& _commandQueue, size_t _global, s
     ::exception::checkCLError(err);
 }
 
-void Kernel::finish(const CommandQueue& _commandQueue)
+void Kernel::finish(const CommandQueue& _commandQueue) const
 {
     cl_int err = clFinish(_commandQueue.m_commandQueue);
     ::exception::checkCLError(err);

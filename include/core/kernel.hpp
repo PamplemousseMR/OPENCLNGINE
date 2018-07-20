@@ -23,7 +23,7 @@ public:
 
     void enqueueNDRange(const CommandQueue&, size_t, size_t) const;
 
-    void finish(const CommandQueue&);
+    void finish(const CommandQueue&) const;
 
 private:
 
