@@ -26,12 +26,12 @@ const cl_context Context::getContext() const
 
 CommandQueue Context::createCommandQueue() const
 {
-    return CommandQueue(*this, m_device);
+    return CommandQueue(m_context, m_device.m_device);
 }
 
 Program Context::createProgram(const std::string& _sources) const
 {
-    return Program(*this, _sources);
+    return Program(m_context, m_device.m_device, _sources);
 }
 
 }

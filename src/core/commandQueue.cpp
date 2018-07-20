@@ -5,10 +5,10 @@
 namespace core
 {
 
-CommandQueue::CommandQueue(const Context& _context, const Device& _device)
+CommandQueue::CommandQueue(const cl_context _context, const cl_device_id _device)
 {
     cl_int err;
-    m_commandQueue = clCreateCommandQueue(_context.m_context, _device.m_device, 0, &err);
+    m_commandQueue = clCreateCommandQueue(_context, _device, 0, &err);
     ::exception::checkCLError(err);
 }
 

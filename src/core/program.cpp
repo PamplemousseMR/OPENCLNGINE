@@ -41,14 +41,14 @@ std::string Program::getInfo< std::string >(const cl_program _program, const cl_
     return info;
 }
 
-Program::Program(const Context& _context, const std::string& _source) :
+Program::Program(const cl_context _context, const cl_device_id _device, const std::string& _source) :
     m_sources(_source),
-    m_context(_context)
+    m_device(_device)
 {
     const char* sources = m_sources.c_str();
     const size_t length = m_sources.length();
     cl_int err;
-    m_program = clCreateProgramWithSource(_context.m_context, 1, &sources, &length, &err);
+    m_program = clCreateProgramWithSource(_context, 1, &sources, &length, &err);
     ::exception::checkCLError(err);
 }
 
@@ -60,18 +60,18 @@ Program::~Program()
 
 void Program::build() const
 {
-    cl_int err = clBuildProgram(m_program, 1, &m_context.m_device.m_device, nullptr, nullptr, nullptr);
+    cl_int err = clBuildProgram(m_program, 1, &m_device, nullptr, nullptr, nullptr);
     if(err == CL_BUILD_PROGRAM_FAILURE)
     {
         size_t infoSize;
         {
-            cl_int err = clGetProgramBuildInfo(m_program, m_context.m_device.m_device, CL_PROGRAM_BUILD_LOG, 0, nullptr, &infoSize);
+            cl_int err = clGetProgramBuildInfo(m_program, m_device, CL_PROGRAM_BUILD_LOG, 0, nullptr, &infoSize);
             ::exception::checkCLError(err);
         }
         std::string info;
         info.resize(infoSize);
         {
-            cl_int err = clGetProgramBuildInfo(m_program, m_context.m_device.m_device, CL_PROGRAM_BUILD_LOG, infoSize, &info[0], nullptr);
+            cl_int err = clGetProgramBuildInfo(m_program, m_device, CL_PROGRAM_BUILD_LOG, infoSize, &info[0], nullptr);
             ::exception::checkCLError(err);
         }
         throw ::exception::Failure(info);
@@ -81,7 +81,7 @@ void Program::build() const
     cl_build_status buildStatus;
     do
     {
-        err = clGetProgramBuildInfo(m_program, m_context.m_device.m_device, CL_PROGRAM_BUILD_STATUS, sizeof(buildStatus), &buildStatus, nullptr);
+        err = clGetProgramBuildInfo(m_program, m_device, CL_PROGRAM_BUILD_STATUS, sizeof(buildStatus), &buildStatus, nullptr);
         ::exception::checkCLError(err);
         if(buildStatus != CL_BUILD_SUCCESS && buildStatus != CL_BUILD_IN_PROGRESS)
         {

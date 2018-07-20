@@ -1,8 +1,8 @@
 #pragma once
 
-#include "core/context.hpp"
-
 #include <CL/cl.h>
+
+#include <vector>
 
 namespace core
 {
@@ -31,7 +31,7 @@ private:
 
 private:
 
-    Program(const Context&, const std::string&);
+    Program(const cl_context, const cl_device_id, const std::string&);
 
 private:
 
@@ -39,7 +39,7 @@ private:
 
     std::string m_sources {""};
 
-    const Context& m_context;
+    const cl_device_id m_device;
 
 };
 

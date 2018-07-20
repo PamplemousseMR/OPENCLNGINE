@@ -1,8 +1,5 @@
 #pragma once
 
-#include "core/context.hpp"
-#include "core/device.hpp"
-
 #include <CL/cl.h>
 
 namespace core
@@ -23,7 +20,7 @@ public:
 
 private:
 
-    CommandQueue(const Context&, const Device&);
+    CommandQueue(const cl_context, const cl_device_id);
 
 private:
 
