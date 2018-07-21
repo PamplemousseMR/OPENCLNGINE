@@ -17,7 +17,8 @@ void Kernel::enqueueNDRange(const CommandQueue& _commandQueue, const std::vector
     assert(_global.size() == _local.size());
     setArgs(0, _args...);
     m_commandQueue = _commandQueue.getCommandQueue();
-    cl_int err = clEnqueueNDRangeKernel(_commandQueue.m_commandQueue, m_kernel, _global.size(), nullptr, &_global[0], &_local[0], 0, nullptr, nullptr);
+    uint32_t dim = static_cast< uint32_t >(_global.size());
+    cl_int err = clEnqueueNDRangeKernel(_commandQueue.m_commandQueue, m_kernel, dim, nullptr, &_global[0], &_local[0], 0, nullptr, nullptr);
     ::exception::checkCLError(err);
 }
 
