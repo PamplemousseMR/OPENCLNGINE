@@ -6,15 +6,18 @@
 
 #include <CL/cl.h>
 
+#include <assert.h>
+
 namespace core
 {
 
 template< typename... A >
-void Kernel::enqueueNDRange(const CommandQueue& _commandQueue, uint32_t _dim, const std::vector< size_t >& _global, const std::vector< size_t >& _local, const A&... _args)
+void Kernel::enqueueNDRange(const CommandQueue& _commandQueue, const std::vector< size_t >& _global, const std::vector< size_t >& _local, const A&... _args)
 {
+    assert(_global.size() == _local.size());
     setArgs(0, _args...);
     m_commandQueue = _commandQueue.getCommandQueue();
-    cl_int err = clEnqueueNDRangeKernel(_commandQueue.m_commandQueue, m_kernel, _dim, nullptr, &_global[0], &_local[0], 0, nullptr, nullptr);
+    cl_int err = clEnqueueNDRangeKernel(_commandQueue.m_commandQueue, m_kernel, _global.size(), nullptr, &_global[0], &_local[0], 0, nullptr, nullptr);
     ::exception::checkCLError(err);
 }
 

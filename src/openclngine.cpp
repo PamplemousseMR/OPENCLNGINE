@@ -62,7 +62,7 @@ int main ()
     ::core::Buffer< double > bufferC = context.createBuffer< double >(commandQueue, ::core::WRITE, bufferLength);
 
     size_t globalWorkSize = static_cast< size_t >(std::sqrt(bufferLength));
-    kernel.enqueueNDRange(commandQueue, 2, {globalWorkSize,globalWorkSize}, {globalWorkSize/2,globalWorkSize/2}, bufferA, bufferB, bufferC, 2, Container{1.2, 3});
+    kernel.enqueueNDRange(commandQueue, {globalWorkSize,globalWorkSize}, {globalWorkSize/2,globalWorkSize/2}, bufferA, bufferB, bufferC, 2, Container{1.2, 3});
     kernel.finish();
 
     std::vector< double > res = bufferC.read();
