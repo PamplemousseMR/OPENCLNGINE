@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/context.hpp"
+
 #include "exception/helper.hpp"
 
 #include <CL/cl.h>
@@ -12,9 +14,7 @@ namespace core
 class Device
 {
 
-   friend class Context;
-
-   friend class Program;
+   friend class Platform;
 
 public:
 
@@ -28,8 +28,6 @@ public:
     };
 
 public:
-
-    Device(const cl_platform_id, const DEVICE_TYPE& = DEFAULT);
 
     ~Device();
 
@@ -187,6 +185,10 @@ private:
 
     template< typename T >
     static T getInfo(const cl_device_id, const cl_device_info);
+
+private:
+
+    Device(const cl_platform_id, const DEVICE_TYPE& = DEFAULT);
 
 private:
 

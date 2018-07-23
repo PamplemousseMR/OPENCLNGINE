@@ -13,8 +13,6 @@ namespace core
 class Platform
 {
 
-    friend class Device;
-
 public:
 
     enum PLATFORM_VENDOR

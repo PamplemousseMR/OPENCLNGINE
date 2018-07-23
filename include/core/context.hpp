@@ -2,7 +2,6 @@
 
 #include "core/buffer.hpp"
 #include "core/commandQueue.hpp"
-#include "core/device.hpp"
 #include "core/program.hpp"
 
 #include <CL/cl.h>
@@ -13,9 +12,9 @@ namespace core
 class Context
 {
 
-public:
+    friend class Device;
 
-    Context(const Device&);
+public:
 
     ~Context();
 
@@ -31,9 +30,13 @@ public:
 
 private:
 
+    Context(const cl_device_id);
+
+private:
+
     cl_context m_context {nullptr};
 
-    const Device& m_device;
+    const cl_device_id m_device;
 
 };
 
