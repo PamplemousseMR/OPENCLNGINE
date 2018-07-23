@@ -5,6 +5,8 @@
 
 #include <CL/cl.h>
 
+#include <iostream>
+
 namespace core
 {
 

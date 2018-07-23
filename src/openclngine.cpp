@@ -9,8 +9,8 @@
 #include "core/platform.hpp"
 #include "core/program.hpp"
 
+#include <cmath>
 #include <iostream>
-
 #include <string>
 
 const std::string source =
