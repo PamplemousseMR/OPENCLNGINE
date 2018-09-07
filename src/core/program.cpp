@@ -3,7 +3,11 @@
 #include "exception/failure.hpp"
 #include "exception/helper.hpp"
 
+#ifndef __APPLE__
 #include <CL/cl.h>
+#else
+#include <OpenCL/cl.h>
+#endif
 
 #include <assert.h>
 #include <sstream>

@@ -2,7 +2,11 @@
 
 #include "core/kernel.hpp"
 
+#ifndef __APPLE__
 #include <CL/cl.h>
+#else
+#include <OpenCL/cl.h>
+#endif
 
 #include <vector>
 

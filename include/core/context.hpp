@@ -4,7 +4,11 @@
 #include "core/commandQueue.hpp"
 #include "core/program.hpp"
 
+#ifndef __APPLE__
 #include <CL/cl.h>
+#else
+#include <OpenCL/cl.h>
+#endif
 
 namespace core
 {
