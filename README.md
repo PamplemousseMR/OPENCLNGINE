@@ -14,7 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - [OpenCL](https://en.wikipedia.org/wiki/O) :  A framework for writing programs that execute across heterogeneous platforms consisting of CPUs, GPUs, DSPs, FPGAs and other processors or hardware accelerators.
 
-### generation
+### Generation
 
 Generate using cmake: `cmake`.
 
