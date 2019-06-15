@@ -195,7 +195,7 @@ matrix:
       addons:
         apt:
           sources:
-            - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-xenial-5.0
           packages:
             - ocl-icd-opencl-dev
             - clang-5.0
@@ -393,7 +393,7 @@ matrix:
       addons:
         apt:
           sources:
-            - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-xenial-5.0
           packages:
             - ocl-icd-opencl-dev
             - clang-5.0
