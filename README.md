@@ -2,9 +2,9 @@
 
 OpenCL sandbox.
 
-## Travis 
+## CI
 
-[![Build Status](https://travis-ci.com/PamplemousseMR/OPENCLNGINE.svg?branch=master)](https://travis-ci.com/PamplemousseMR/OPENCLNGINE)
+![Build Status](https://github.com/PamplemousseMR/OPENCLNGINE/actions/workflows/build.yml/badge.svg)
 
 ## Getting Started
 
