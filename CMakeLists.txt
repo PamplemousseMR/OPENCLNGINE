@@ -1,60 +1,56 @@
-#========================================
-#	project
-#========================================
-CMAKE_MINIMUM_REQUIRED(VERSION 3.7)
-PROJECT("OPENCLNGINE" CXX)
+#=======================================
+#                PROJECT
+#=======================================
 
-#================================================================================
-#		init
-#================================================================================
+cmake_minimum_required(VERSION 3.0)
+project("OPENCLNGINE" CXX)
 
-#========================================
-#	variables
-#========================================
-SET(openclngine_project_name "openclngine")
-SET(openclngine_src_dir "src")
-SET(openclngine_header_dir "include")
+#=======================================
+#               LIBRARIES
+#=======================================
 
-#========================================
-#	compiler specifications
-#========================================
-SET(CMAKE_CXX_STANDARD 14)
-IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    IF((CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "3.8.0") AND (CMAKE_CXX_COMPILER_VERSION VERSION_LESS_EQUAL "3.9.1"))
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-    ENDIF()
-ENDIF()
+find_package("OpenCL" REQUIRED)
 
-#========================================
-#	find files
-#========================================
-FILE(GLOB_RECURSE openclngine_src_files ${openclngine_src_dir}/*)
-FILE(GLOB_RECURSE openclngine_header_files ${openclngine_header_dir}/*)
+#=======================================
+#              EXECUTABLE
+#=======================================
 
-#================================================================================
-#		create
-#================================================================================
+set(openclngine_src
+    openclngine/core/commandQueue.cpp
+    openclngine/core/context.cpp
+    openclngine/core/device.cpp
+    openclngine/core/kernel.cpp
+    openclngine/core/platform.cpp
+    openclngine/core/program.cpp
+    openclngine/exception/failure.cpp
+    openclngine/exception/helper.cpp
+    openclngine/exception/iexception.cpp
+    openclngine/exception/invalid.cpp
+    openclngine/exception/not.cpp
+    openclngine/exception/out.cpp
+    openclngine/exception/unknow.cpp
+    openclngine/openclngine.cpp)
 
-#========================================
-#	create project
-#========================================
-ADD_EXECUTABLE(${openclngine_project_name} ${openclngine_src_files} ${openclngine_header_files})
-TARGET_INCLUDE_DIRECTORIES(${openclngine_project_name} PRIVATE ${openclngine_header_dir})
+set(openclngine_header
+    openclngine/core/buffer.hpp
+    openclngine/core/buffer.hxx
+    openclngine/core/commandQueue.hpp
+    openclngine/core/context.hpp
+    openclngine/core/context.hxx
+    openclngine/core/device.hpp
+    openclngine/core/kernel.hpp
+    openclngine/core/kernel.hxx
+    openclngine/core/platform.hpp
+    openclngine/core/program.hpp
+    openclngine/exception/failure.hpp
+    openclngine/exception/helper.hpp
+    openclngine/exception/iexception.hpp
+    openclngine/exception/invalid.hpp
+    openclngine/exception/not.hpp
+    openclngine/exception/out.hpp
+    openclngine/exception/unknow.hpp)
 
-#========================================
-#	target specifications
-#========================================
-TARGET_COMPILE_FEATURES(${openclngine_project_name} PUBLIC cxx_noexcept)
-TARGET_COMPILE_FEATURES(${openclngine_project_name} PUBLIC cxx_override)
-
-#========================================
-#	find OpenCL
-#========================================
-FIND_PACKAGE("OpenCL")
-
-IF(NOT ${OpenCL_FOUND})
-    MESSAGE(FATAL_ERROR "Can't find OpenCL")
-ENDIF()
-
-TARGET_INCLUDE_DIRECTORIES(${openclngine_project_name} PRIVATE ${OpenCL_INCLUDE_DIR})
-TARGET_LINK_LIBRARIES(${openclngine_project_name} ${OpenCL_LIBRARY})
+add_executable(openclngine ${openclngine_src} ${openclngine_header})
+target_include_directories(openclngine PRIVATE "openclngine")
+set_target_properties(openclngine PROPERTIES CXX_STANDARD 14)
+target_link_libraries(openclngine PRIVATE OpenCL::OpenCL)
